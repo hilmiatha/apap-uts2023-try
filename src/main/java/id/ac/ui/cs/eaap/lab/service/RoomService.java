@@ -24,6 +24,10 @@ public class RoomService {
         return roomDB.findById(id).get();
     }
 
+    public List<RoomModel> searchRoom(String name){
+        return roomDB.findByRoomNameContainingIgnoreCase(name);
+    }
+
     public void add(RoomModel roomModel) {
         roomDB.save(roomModel);
     }

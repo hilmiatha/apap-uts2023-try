@@ -97,8 +97,10 @@ public class RoomController {
 
     @GetMapping("/search")
     public String searchByName(@RequestParam(name = "name") String name, Model model) {
-        // TODO
-        return "error/404.html";
+        List<RoomModel> roomModels = new ArrayList<>();
+        roomModels = roomService.searchRoom(name);
+        model.addAttribute("roomList", roomModels);
+        return "room/view-all";
     }
 
 }
