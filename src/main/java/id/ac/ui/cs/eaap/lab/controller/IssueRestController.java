@@ -1,9 +1,17 @@
 package id.ac.ui.cs.eaap.lab.controller;
 
 
+import id.ac.ui.cs.eaap.lab.restDTO.response.BaseResponseDTO;
+import id.ac.ui.cs.eaap.lab.restDTO.response.IssueResponseDTO;
+import id.ac.ui.cs.eaap.lab.restservice.IssueRestService;
 import id.ac.ui.cs.eaap.lab.service.IssueService;
 import lombok.extern.slf4j.Slf4j;
+
+import java.sql.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +22,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/lapor")
 public class IssueRestController {
 
+    @Autowired
+    IssueRestService issueRestService;
+
 
     @GetMapping("/active")
-    public ResponseEntity getActiveIssues() {
-        log.info("api get active issues");
-        // TODO
-        return ResponseEntity.ok("");
+    public ResponseEntity<?> getAllActiveIssues(){
+        var baseResponseDTO = new BaseResponseDTO<List<IssueResponseDTO>>();
+
+        List<IssueResponseDTO> listActiveIssues = issueRestService.getAllActiveIssues();
+
+        if (listActiveIssues == null){
+            baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
+            baseResponseDTO.setMessage(String.format("Something Wrong"));
+            baseResponseDTO.setTimestamp(new Date(System.currentTimeMillis()));
+            return new ResponseEntity<>(baseResponseDTO, HttpStatus.NOT_FOUND);
+        }
+        baseResponseDTO.setStatus(HttpStatus.OK.value());
+        baseResponseDTO.setData(listActiveIssues);
+        baseResponseDTO.setMessage(String.format("Issues Retrieved Successfully"));
+        baseResponseDTO.setTimestamp(new Date(System.currentTimeMillis()));
+        return new ResponseEntity<>(baseResponseDTO, HttpStatus.OK);
+        
     }
 
     @GetMapping("/statistics")

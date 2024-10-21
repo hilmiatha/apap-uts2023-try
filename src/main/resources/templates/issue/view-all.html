@@ -14,7 +14,7 @@
     <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
     <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
 
-    <table class="table">
+    <table class="table" id="issueTable">
         <thead>
         <tr>
             <th>Issue Id</th>
@@ -26,21 +26,56 @@
             <th>Action</th>
         </tr>
         </thead>
-        <tbody>
-            <tr th:each="issue : ${issueList}">
-                <td th:text="${issue.issueId}"></td>
-                <td th:text="${issue.roomModel.roomNumber}"></td>
-                <td th:text="${issue.description}"></td>
-                <td th:text="${issue.reportedBy}"></td>
-                <td th:text="${issue.reportedOn}"></td>
-                <td th:text="${issue.status}"></td>
-                <td>
-                    <a class="btn btn-detail" th:href="@{/laporpak#}">Detail</a>
-                </td>
-            </tr>
+        <tbody id="issueTableBody">
         </tbody>
     </table>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '/api/lapor/active', // Ensure the URL is correct
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 200) {
+                    var issues = response.data;
+                    var tbody = $('#issueTableBody');
+                    tbody.empty(); // Clear any existing content
+                    $.each(issues, function(index, issue) {
+                        var row = $('<tr>');
+                        row.append($('<td>').text(issue.issueId));
+                        row.append($('<td>').text(issue.room.roomNumber));
+                        row.append($('<td>').text(issue.description));
+                        row.append($('<td>').text(issue.reportedOn));
+                        row.append($('<td>').text(issue.reportedBy));
+                        row.append($('<td>').text(issue.status));
+                        row.append($('<td>').text(issue.unresolvedDays));
+                        tbody.append(row);
+                    });
+                } else {
+                    alert('Failed to retrieve issues: ' + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Error fetching data: ' + error);
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#issueTable').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "pageLength": 8,
+            "lengthMenu": [8, 10, 15, 20]
+        });
+    });
+</script>
 
 </body>
 </html>

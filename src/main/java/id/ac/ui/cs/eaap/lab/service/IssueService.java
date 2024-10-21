@@ -20,6 +20,8 @@ public class IssueService {
     @Autowired
     private RoomService roomService;
 
+    
+
     public List<IssueModel> findAll() {
         return issueDB.findAll();
     }
