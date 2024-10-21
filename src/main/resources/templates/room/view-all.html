@@ -5,6 +5,23 @@
     <title>Lihat Semua Kasus - UTS APAP 2023</title>
     <object th:insert="~{fragments/fragment::css}" th:remove="tag"></object>
     <object th:insert="~{fragments/fragment::js}" th:remove="tag"></object>
+
+    <style>
+        
+        .btn-detail {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .table-header {
+            background-color: #6a1b9a;
+            color: white;
+        }
+
+        .form-control, .form-select {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 <nav th:replace="~{fragments/fragment::navbar(~{::home})}"></nav>
@@ -14,7 +31,7 @@
     <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
     <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
 
-    <table class="table">
+    <table class="table" id="roomTable">
         <thead>
         <tr>
             <th>Room Id</th>
@@ -26,9 +43,35 @@
         </tr>
         </thead>
         <tbody>
+            <tr th:each="room : ${roomList}">
+                <td th:text="${room.roomId}"></td>
+                <td th:text="${room.roomNumber}"></td>
+                <td th:text="${room.roomName}"></td>
+                <td th:text="${room.buildingName}"></td>
+                <td th:text="${room.faculty}"></td>
+                <td>
+                    <a class="btn btn-detail" th:href="@{/ruang/add/{id}(id=${room.roomId})}">Detail</a>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
+
+<!-- DataTables Initialization -->
+<script>
+    $(document).ready(function() {
+        $('#roomTable').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "pageLength": 8,
+            "lengthMenu": [8, 10, 15, 20]
+        });
+    });
+</script>
 
 </body>
 </html>

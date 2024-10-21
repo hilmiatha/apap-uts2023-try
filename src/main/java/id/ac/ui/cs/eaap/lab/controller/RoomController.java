@@ -25,12 +25,15 @@ public class RoomController {
     @Autowired
     ListService listService;
 
+    @Autowired
+    RoomService roomService;
+
 
     @GetMapping("/view-all")
     public String viewAllPage(Model model) {
         log.info("view all issues");
-        // TODO
         List<RoomModel> roomModels = new ArrayList<>();
+        roomModels = roomService.findAll();
         model.addAttribute("roomList", roomModels);
         return "room/view-all";
     }
