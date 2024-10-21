@@ -1,6 +1,6 @@
 package id.ac.ui.cs.eaap.lab.controller;
 
-import id.ac.ui.cs.eaap.dto.AddRoomRequestDTO;
+import id.ac.ui.cs.eaap.lab.dto.AddRoomRequestDTO;
 import id.ac.ui.cs.eaap.lab.model.IssueModel;
 import id.ac.ui.cs.eaap.lab.model.RoomModel;
 import id.ac.ui.cs.eaap.lab.service.IssueService;

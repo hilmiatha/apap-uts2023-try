@@ -29,7 +29,7 @@
         <tbody>
             <tr th:each="issue : ${issueList}">
                 <td th:text="${issue.issueId}"></td>
-                <td th:text="${issue.roomModel.roomId}"></td>
+                <td th:text="${issue.roomModel.roomNumber}"></td>
                 <td th:text="${issue.description}"></td>
                 <td th:text="${issue.reportedBy}"></td>
                 <td th:text="${issue.reportedOn}"></td>

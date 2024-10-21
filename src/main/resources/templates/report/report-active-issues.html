@@ -27,9 +27,33 @@
         </tr>
         </thead>
         <tbody>
+            <tr th:each="issue : ${filteredIssues}">
+                <td th:text="${issue.issueId}"></td>
+                <td th:text="${issue.roomModel.roomNumber}"></td>
+                <td th:text="${issue.description}"></td>
+                <td th:text="${issue.reportedOn}"></td>
+                <td th:text="${issue.reportedBy}"></td>
+                <td th:text="${issue.status}"></td>
+                <td th:text="${issue.getUnresolvedDays}"></td>
+            </tr>
         </tbody>
     </table>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#table_result').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "pageLength": 8,
+            "lengthMenu": [8, 10, 15, 20]
+        });
+    });
+</script>
 
 </body>
 </html>

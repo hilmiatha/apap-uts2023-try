@@ -1,4 +1,4 @@
-package id.ac.ui.cs.eaap.dto;
+package id.ac.ui.cs.eaap.lab.dto;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class AddRoomRequestDTO {
 
     private Long roomId;
-    
+
     @NotBlank(message = "Nomor ruangan tidak boleh kosong!")
     private String roomNumber;
 

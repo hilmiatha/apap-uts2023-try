@@ -67,7 +67,6 @@ public class IssueController {
         model.addAttribute("issueModel", issueModel);
         model.addAttribute("listService", listService);
 
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!! " + issueModel.getRoomModel().getRoomId());
 
         return "issue/form-update-status";
     }
