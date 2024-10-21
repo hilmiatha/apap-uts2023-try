@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -28,6 +29,9 @@ public class RoomController {
 
     @Autowired
     RoomService roomService;
+
+    @Autowired
+    IssueService issueService;
 
 
     @GetMapping("/view-all")
@@ -75,10 +79,10 @@ public class RoomController {
     @GetMapping("/{id}/view")
     public String detail(@PathVariable Long id, Model model, RedirectAttributes redirectAttrs) {
         // TODO
-        RoomModel roomModel = new RoomModel();
+        RoomModel roomModel = roomService.getRoomById(id);
         model.addAttribute("roomModel", roomModel);
 
-        List<IssueModel> issueList = new ArrayList<>();
+        List<IssueModel> issueList = issueService.findAllByRoomId(id);
         model.addAttribute("issueList", issueList);
 
         IssueModel issueModel = new IssueModel();

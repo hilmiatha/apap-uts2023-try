@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoomService {
@@ -17,6 +18,10 @@ public class RoomService {
 
     public List<RoomModel> findAll() {
         return roomDB.findAll();
+    }
+
+    public RoomModel getRoomById(Long id){
+        return roomDB.findById(id).get();
     }
 
     public void add(RoomModel roomModel) {

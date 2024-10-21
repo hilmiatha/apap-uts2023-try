@@ -50,7 +50,7 @@
                 <td th:text="${room.buildingName}"></td>
                 <td th:text="${room.faculty}"></td>
                 <td>
-                    <a class="btn btn-detail" th:href="@{/ruang/add/{id}(id=${room.roomId})}">Detail</a>
+                    <a class="btn btn-detail" th:href="@{/ruang/{id}/view(id=${room.roomId})}">Detail</a>
                 </td>
             </tr>
         </tbody>

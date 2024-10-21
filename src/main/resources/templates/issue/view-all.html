@@ -27,6 +27,17 @@
         </tr>
         </thead>
         <tbody>
+            <tr th:each="issue : ${issueList}">
+                <td th:text="${issue.issueId}"></td>
+                <td th:text="${issue.roomModel.roomId}"></td>
+                <td th:text="${issue.description}"></td>
+                <td th:text="${issue.reportedBy}"></td>
+                <td th:text="${issue.reportedOn}"></td>
+                <td th:text="${issue.status}"></td>
+                <td>
+                    <a class="btn btn-detail" th:href="@{/laporpak#}">Detail</a>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

@@ -24,12 +24,14 @@ public class IssueController {
     @Autowired
     ListService listService;
 
+    @Autowired
+    IssueService issueService;
+
 
     @GetMapping("/view-all")
     public String viewAllIssues(Model model) {
-        // TODO
         log.info("view all issues");
-        List<IssueModel> issueModels = new ArrayList<>();
+        List<IssueModel> issueModels = issueService.findAll();
         model.addAttribute("issueList", issueModels);
         return "issue/view-all";
     }
@@ -49,6 +51,7 @@ public class IssueController {
 
         log.info(issueModel.toString());
         // TODO: store to database
+        issueService.add(issueModel);
         log.info("after save\n{}", issueModel);
 
         redirectAttrs.addFlashAttribute("success",
