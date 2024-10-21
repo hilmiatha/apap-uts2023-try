@@ -16,6 +16,7 @@
                 <h2 class="mb-4">Update Status Masalah</h2>
                 <form th:action="@{/lapor/update}" th:object="${issueModel}" method="POST">
                     <input class="form-control" type="hidden" th:field="*{issueId}" readonly/>
+                    <input class="form-control" type="hidden" th:field="*{roomModel.roomId}" readonly/>
 
                     <div class="form-group row">
                         <label for="nik" class="col-4 col-form-label">description</label>

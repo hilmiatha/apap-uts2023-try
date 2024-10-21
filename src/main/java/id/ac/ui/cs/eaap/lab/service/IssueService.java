@@ -29,11 +29,25 @@ public class IssueService {
         return issueDB.findByRoomModel(room);
     }
 
+    public IssueModel getIssueById(Long id){
+        return issueDB.findById(id).get();
+    }
+
     public void add(IssueModel issueModel) {
         issueDB.save(issueModel);
     }
 
     public void update(IssueModel issueModel) {
+        IssueModel updatedIssue = getIssueById(issueModel.getIssueId());
+        if (updatedIssue != null){
+            updatedIssue.setIssueId(issueModel.getIssueId());
+            updatedIssue.setDescription(issueModel.getDescription());
+            updatedIssue.setReportedBy(issueModel.getReportedBy());
+            updatedIssue.setReportedOn(issueModel.getReportedOn());
+            updatedIssue.setRoomModel(issueModel.getRoomModel());
+            updatedIssue.setStatus(issueModel.getStatus());
+            issueDB.save(updatedIssue);
+        }
     }
 
 }

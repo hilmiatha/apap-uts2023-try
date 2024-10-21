@@ -63,9 +63,11 @@ public class IssueController {
     @GetMapping(value = "/{id}/update")
     public String updateStatus(@PathVariable Long id, Model model) {
         // TODO
-        IssueModel issueModel = new IssueModel();
+        IssueModel issueModel = issueService.getIssueById(id);
         model.addAttribute("issueModel", issueModel);
         model.addAttribute("listService", listService);
+
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!! " + issueModel.getRoomModel().getRoomId());
 
         return "issue/form-update-status";
     }
@@ -79,6 +81,7 @@ public class IssueController {
         }
 
         // TODO: store to database
+        issueService.update(issueModel);
 
         redirectAttrs.addFlashAttribute("success",
                 "Status berhasil di update");

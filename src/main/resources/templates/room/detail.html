@@ -86,7 +86,7 @@
                             <td th:text="${issue.reportedOn}"></td>
                             <td th:text="${issue.status}"></td>
                             <td>
-                                <a class="btn btn-detail" th:href="@{#}">Update Status</a>
+                                <a class="btn btn-detail" th:href="@{/lapor/{id}/update(id=${issue.issueId})}">Update Status</a>
                             </td>
                         </tr>
                     </tbody>
