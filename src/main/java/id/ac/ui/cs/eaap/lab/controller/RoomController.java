@@ -1,5 +1,6 @@
 package id.ac.ui.cs.eaap.lab.controller;
 
+import id.ac.ui.cs.eaap.dto.AddRoomRequestDTO;
 import id.ac.ui.cs.eaap.lab.model.IssueModel;
 import id.ac.ui.cs.eaap.lab.model.RoomModel;
 import id.ac.ui.cs.eaap.lab.service.IssueService;
@@ -41,26 +42,32 @@ public class RoomController {
 
     @GetMapping("/add")
     public String addFormPage(Model model) {
-        RoomModel roomModel = new RoomModel();
+        var roomDTO = new AddRoomRequestDTO();
 
-        model.addAttribute("roomModel", roomModel);
+        model.addAttribute("roomModel", roomDTO);
         model.addAttribute("listService", listService);
 
         return "room/form-add";
     }
 
     @PostMapping(value = "/add", params = {"save"})
-    public String addSubmitPage(@ModelAttribute RoomModel roomModel, BindingResult result,
+    public String addSubmitPage(@ModelAttribute AddRoomRequestDTO roomModel, BindingResult result,
                                 RedirectAttributes redirectAttrs) {
         if (result.hasErrors()) {
             redirectAttrs.addFlashAttribute("error", "The error occurred.");
             return "redirect:/ruang/add";
         }
 
-        // TODO: store to database
+        RoomModel newRoom = new RoomModel();
+        newRoom.setRoomName(roomModel.getRoomName());
+        newRoom.setRoomNumber(roomModel.getRoomNumber());
+        newRoom.setBuildingName(roomModel.getBuildingName());
+        newRoom.setFaculty(roomModel.getFaculty());
+
+        roomService.add(newRoom);
 
         redirectAttrs.addFlashAttribute("success",
-                String.format("Ruang berhasil disimpan dengan id %d", roomModel.getRoomId()));
+                String.format("Ruang berhasil disimpan dengan id %d", newRoom.getRoomId()));
         return "redirect:/ruang/view-all";
     }
 
